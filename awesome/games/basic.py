@@ -38,8 +38,9 @@ async def info(session: CommandSession):
             ret = f"道友：{name}还在打坐中，请至少等待{diff}秒"
             await session.send(ret)
     # 可以修仙就开始修仙
-    player.last_med = get_current_timestamp()  # 开始打坐
-    await player.save()
-    # 向用户发送东西
-    ret = f"道友：{name}开始打坐: {player.last_med}"
-    await session.send(ret)
+    else:
+        player.last_med = get_current_timestamp()  # 开始打坐
+        await player.save()
+        # 向用户发送东西
+        ret = f"道友：{name}开始打坐"
+        await session.send(ret)
