@@ -1,7 +1,7 @@
 import json
 import aioredis
 
-pool = aioredis.ConnectionPool.from_url("redis://localhost", username="user", password="sEcRet", max_connections=10)
+pool = aioredis.ConnectionPool.from_url("redis://localhost", max_connections=10)
 redis = aioredis.Redis(connection_pool=pool)
 
 
