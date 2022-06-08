@@ -2,6 +2,8 @@ import nonebot
 import config
 from os import path
 
+from models.playerModel import PlayerModel
+
 if __name__ == '__main__':
     nonebot.init(config)
     nonebot.load_plugins(

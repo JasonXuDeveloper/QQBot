@@ -1,4 +1,5 @@
 from utils.dbHelper import get_data_as_model_object, set_data_as_json
+from varname import nameof
 
 
 class PlayerModel:
@@ -14,6 +15,14 @@ class PlayerModel:
         self._critDmg = 150  # 暴击伤害百分比
         self._energy = 0  # 功力
         self._level = 0  # 境界
+        self._last_med = 0  # 上次打坐时间
+
+    def can_med(self) -> bool:
+        """
+        是否可打坐
+        :return:
+        """
+        return self.last_med == 0
 
     # 获取玩家数据
     @staticmethod
@@ -40,23 +49,31 @@ class PlayerModel:
         ls = "筑基、开光、融合、心动、金丹、元婴、出窍、分神、合体、洞虚、大乘、渡劫".split('、')
         return ls[self.level]
 
+    # 获取属性
+    def get_member(self, member : str, def_val = None):
+        if hasattr(self, member):
+            return self.__dict__[member]
+        else:
+            # 尝试创建
+            temp = PlayerModel(self.id)
+            if hasattr(temp, member):
+                temp.save()
+                self = temp
+                return temp.__dict__[member]
+            else:  # 创建的也没就是真的没了
+                return def_val
+
+    @property
+    def last_med(self):
+        return self.get_member(nameof(self._last_med), 0)
+    
     @property
     def energy(self):
-        try:
-            return self._energy
-        except:
-            self._energy = PlayerModel(self.id)._energy
-            self.save()
-            return self._energy
+        return self.get_member(nameof(self._energy), 0)
 
     @property
     def level(self):
-        try:
-            return self._level
-        except:
-            self._level = PlayerModel(self.id)._level
-            self.save()
-            return self._level
+        return self.get_member(nameof(self._level), 0)
 
     @property
     def hp(self):

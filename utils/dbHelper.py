@@ -18,13 +18,6 @@ async def get_data(key: str) -> str:
     return await redis.get(key)
 
 
-async def get_data_as_object(key: str) -> object:
-    d = await get_data(key)
-    if d:
-        return json.loads(d)
-    return None
-
-
 async def get_data_as_model_object(key: str) -> object:
     d = await get_data(key)
     if d:
