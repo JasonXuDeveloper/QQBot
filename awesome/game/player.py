@@ -18,7 +18,7 @@ def permission(sender: SenderRoles) -> bool:
 @on_command('info', aliases=('自视', '属性'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
 async def info(session: CommandSession):
     # 取得消息的内容，并且去掉首尾的空白符
-    # ctx = session.current_arg_text.strip()
+    ctx = session.current_arg_text.strip()
 
     # 获取用户信息
     id = get_id(session)
