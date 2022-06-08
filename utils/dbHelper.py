@@ -9,8 +9,8 @@ async def set_data(key: str, val: str):
     await redis.set(key, val)
 
 
-async def set_data_as_json(key: str, val: object):
-    await redis.set(key, json.dumps(val))
+async def set_data_as_json(key: str, val: object, cls):
+    await redis.set(key, json.dumps(val, cls=cls))
 
 
 async def get_data(key: str) -> str:
