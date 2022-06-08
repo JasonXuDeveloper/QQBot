@@ -50,30 +50,30 @@ class PlayerModel:
         return ls[self.level]
 
     # 获取属性
-    def get_member(self, member : str, def_val = None):
+    async def get_member(self, member : str, def_val = None):
         if hasattr(self, member):
             return self.__dict__[member]
         else:
             # 尝试创建
             temp = PlayerModel(self.id)
             if hasattr(temp, member):
-                temp.save()
+                await temp.save()
                 self = temp
                 return temp.__dict__[member]
             else:  # 创建的也没就是真的没了
                 return def_val
 
     @property
-    def last_med(self):
-        return self.get_member("_last_med", 0)
+    async def last_med(self):
+        return await self.get_member("_last_med", 0)
     
     @property
-    def energy(self):
-        return self.get_member("_energy", 0)
+    async def energy(self):
+        return await self.get_member("_energy", 0)
 
     @property
-    def level(self):
-        return self.get_member("_level", 0)
+    async def level(self):
+        return await self.get_member("_level", 0)
 
     @property
     def hp(self):

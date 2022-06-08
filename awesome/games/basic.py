@@ -28,7 +28,7 @@ async def info(session: CommandSession):
             # 更新数据
             player.energy += reward
             player.last_med = 0  # 取消打坐
-            player.save()
+            await player.save()
             # 配套的话
             txt = ["小有所成","初窥门径","炉火纯青","受高人指点","感悟天地造化"]
             ret = f"道友：{name}已结束打坐，{txt[reward - 1]}，获得{reward}功力"
@@ -39,7 +39,7 @@ async def info(session: CommandSession):
             await session.send(ret)
     # 可以修仙就开始修仙
     player.last_med = get_current_timestamp()  # 开始打坐
-    player.save()
+    await player.save()
     # 向用户发送东西
     ret = f"道友：{name}开始打坐"
     await session.send(ret)
