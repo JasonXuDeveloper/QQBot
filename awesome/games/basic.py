@@ -41,5 +41,5 @@ async def info(session: CommandSession):
     player.last_med = get_current_timestamp()  # 开始打坐
     await player.save()
     # 向用户发送东西
-    ret = f"道友：{name}开始打坐"
+    ret = f"道友：{name}开始打坐: {player.last_med}"
     await session.send(ret)
