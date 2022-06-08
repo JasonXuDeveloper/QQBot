@@ -1,6 +1,8 @@
 import json
 import aioredis
 
+from utils.jsonHelper import MyEncoder
+
 pool = aioredis.ConnectionPool.from_url("redis://localhost", max_connections=10)
 redis = aioredis.Redis(connection_pool=pool)
 
@@ -9,8 +11,8 @@ async def set_data(key: str, val: str):
     await redis.set(key, val)
 
 
-async def set_data_as_json(key: str, val: object, cls):
-    await redis.set(key, json.dumps(val, cls=cls))
+async def set_data_as_json(key: str, val: object):
+    await redis.set(key, json.dumps(val, cls=MyEncoder))
 
 
 async def get_data(key: str) -> str:
@@ -24,8 +26,8 @@ async def get_data_as_object(key: str) -> object:
     return None
 
 
-async def get_data_as_model_object(key: str, cls) -> object:
+async def get_data_as_model_object(key: str) -> object:
     d = await get_data(key)
     if d:
-        return json.loads(d, cls=cls)
+        return json.loads(d, cls=MyEncoder)
     return None

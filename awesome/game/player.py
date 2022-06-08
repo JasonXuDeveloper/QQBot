@@ -1,5 +1,6 @@
 from nonebot import on_command, CommandSession, SenderRoles
 from models.playerModel import *
+from utils.jsonHelper import MyEncoder
 from utils.sessionHelper import *
 from utils.dbHelper import *
 
@@ -27,11 +28,11 @@ async def info(session: CommandSession):
     # 获取用户信息
     id = get_id(session)
     key = get_key(id)
-    player = await get_data_as_model_object(key, PlayerModel)
+    player = await get_data_as_model_object(key)
     # 没有就注册并保存
     if not player:
         player = PlayerModel(id)
         # 保存
-        await set_data_as_json(key, player, PlayerModel)
+        await set_data_as_json(key, player)
     # 向用户发送东西
-    await session.send(json.dumps(player, cls=PlayerModel))
+    await session.send(json.dumps(player, cls=MyEncoder))
