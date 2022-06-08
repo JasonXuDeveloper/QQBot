@@ -32,6 +32,6 @@ async def info(session: CommandSession):
     if not player:
         player = PlayerModel(id)
         # 保存
-        await set_data_as_json(key, player)
+        await set_data_as_json(key, player, PlayerModel)
     # 向用户发送东西
-    await session.send(json.dumps(player))
+    await session.send(json.dumps(player, cls=PlayerModel))
