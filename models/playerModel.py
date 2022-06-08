@@ -1,5 +1,6 @@
 from utils.dbHelper import get_data_as_model_object, set_data_as_json
 from varname import nameof
+import asyncio
 
 
 class PlayerModel:
@@ -41,6 +42,13 @@ class PlayerModel:
         key = f"player_{self.id}"
         await set_data_as_json(key, self)
 
+
+    def save_sync(self):
+        loop = asyncio.get_event_loop()
+        coroutine = self.save()
+        loop.run_until_complete(coroutine)
+
+
     def get_level_name(self) -> str:
         """
         获取境界名
@@ -50,38 +58,38 @@ class PlayerModel:
         return ls[self.level]
 
     # 获取属性
-    async def get_member(self, member : str, def_val = None):
+    def get_member(self, member : str, def_val = None):
         if hasattr(self, member):
             return self.__dict__[member]
         else:
             # 尝试创建
             temp = PlayerModel(self.id)
             if hasattr(temp, member):
-                await temp.save()
+                temp.save_sync()
                 self = temp
                 return temp.__dict__[member]
             else:  # 创建的也没就是真的没了
                 return def_val
 
     @property
-    async def last_med(self):
-        return await self.get_member("_last_med", 0)
+    def last_med(self):
+        return self.get_member("_last_med", 0)
 
     @last_med.setter
     def last_med(self, value):
         self._last_med = value
     
     @property
-    async def energy(self):
-        return await self.get_member("_energy", 0)
+    def energy(self):
+        return self.get_member("_energy", 0)
 
     @energy.setter
     def energy(self, value):
         self._energy = value
 
     @property
-    async def level(self):
-        return await self.get_member("_level", 0)
+    def level(self):
+        return self.get_member("_level", 0)
 
     @level.setter
     def level(self, value):
