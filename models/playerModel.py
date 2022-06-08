@@ -13,7 +13,7 @@ class PlayerModel:
         self._res = 0  # 韧性
         self._critDmg = 150  # 暴击伤害百分比
         self._energy = 0  # 功力
-        self._level = 1  # 境界
+        self._level = 0  # 境界
 
     # 获取玩家数据
     @staticmethod
@@ -42,17 +42,21 @@ class PlayerModel:
 
     @property
     def energy(self):
-        if not self._energy:
+        try:
+            return self._energy
+        except:
             self._energy = PlayerModel(self.id)._energy
             self.save()
-        return self._energy
+            return self._energy
 
     @property
     def level(self):
-        if not self._level:
+        try:
+            return self._level
+        except:
             self._level = PlayerModel(self.id)._level
             self.save()
-        return self._level
+            return self._level
 
     @property
     def hp(self):
