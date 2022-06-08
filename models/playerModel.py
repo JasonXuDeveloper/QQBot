@@ -65,15 +65,15 @@ class PlayerModel:
 
     @property
     def last_med(self):
-        return self.get_member(nameof(self._last_med), 0)
+        return self.get_member("_last_med", 0)
     
     @property
     def energy(self):
-        return self.get_member(nameof(self._energy), 0)
+        return self.get_member("_energy", 0)
 
     @property
     def level(self):
-        return self.get_member(nameof(self._level), 0)
+        return self.get_member("_level", 0)
 
     @property
     def hp(self):
