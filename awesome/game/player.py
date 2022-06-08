@@ -15,7 +15,7 @@ def permission(sender: SenderRoles) -> bool:
 
 # on_command 装饰器将函数声明为一个命令处理器
 # 命令名字，别名，是否需要艾特了才能触发，然后必须来自群（JEngine群921271552）才能处理
-@on_command('info', aliases=('自视', '属性'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=2))
+@on_command('info', aliases=('自视', '属性'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
 async def info(session: CommandSession):
     # 取得消息的内容，并且去掉首尾的空白符
     # ctx = session.current_arg_text.strip()
@@ -31,7 +31,7 @@ async def info(session: CommandSession):
     await session.send(ret)
     # 等待输入内容
     more = (await session.aget(prompt='输入「更多」以查看其他数据')).strip()
-    if more is "更多":
+    if more == "更多":
         ret = f"用户：{name}\n" \
               f"血量：{player.hp}\n" \
               f"攻击力：{player.atk}\n" \
@@ -41,5 +41,3 @@ async def info(session: CommandSession):
               f"韧性值：{player.res}\n" \
               f"暴击伤害：{player.critDmg}"
         await session.send(ret)
-    else:
-        await session.send(f"你输入了：{more}")
