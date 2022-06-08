@@ -1,7 +1,6 @@
 class PlayerModel:
     def __init__(self, id: int):
-        self.id = id
-        self.id = -1  # QQ号
+        self.id = id # QQ号
         self._atk = 1  # 攻击力
         self._hp = 1  # 血量
         self._def = 0  # 防御力

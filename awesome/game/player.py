@@ -1,6 +1,6 @@
 from nonebot import on_command, CommandSession, SenderRoles
 from models.playerModel import *
-from utils.jsonHelper import MyEncoder
+from utils.jsonHelper import encode
 from utils.sessionHelper import *
 from utils.dbHelper import *
 
@@ -35,4 +35,4 @@ async def info(session: CommandSession):
         # 保存
         await set_data_as_json(key, player)
     # 向用户发送东西
-    await session.send(json.dumps(player, cls=MyEncoder))
+    await session.send(encode(player))

@@ -1,6 +1,9 @@
-from json import JSONEncoder
+import jsonpickle
 
 
-class MyEncoder(JSONEncoder):
-    def default(self, o):
-        return o.__dict__
+def encode(val: object) -> str:
+    return jsonpickle.encode(val)
+
+
+def decode(val: str) -> object:
+    return jsonpickle.decode(val)
