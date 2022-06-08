@@ -66,14 +66,26 @@ class PlayerModel:
     @property
     async def last_med(self):
         return await self.get_member("_last_med", 0)
+
+    @last_med.setter
+    def last_med(self, value):
+        self._last_med = value
     
     @property
     async def energy(self):
         return await self.get_member("_energy", 0)
 
+    @energy.setter
+    def energy(self, value):
+        self._energy = value
+
     @property
     async def level(self):
         return await self.get_member("_level", 0)
+
+    @level.setter
+    def level(self, value):
+        self._level = value
 
     @property
     def hp(self):
