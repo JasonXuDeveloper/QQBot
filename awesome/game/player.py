@@ -41,3 +41,5 @@ async def info(session: CommandSession):
               f"韧性值：{player.res}\n" \
               f"暴击伤害：{player.critDmg}"
         await session.send(ret)
+    else:
+        await session.send(f"你输入了：{more}")
