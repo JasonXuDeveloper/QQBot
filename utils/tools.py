@@ -10,7 +10,7 @@ def get_rand_int(min: int,max:int)->int:
 
 # 现在时间
 def get_current_timestamp() -> int:
-    time.time()
+    return int(time.time())
 
 
 # 鉴权
