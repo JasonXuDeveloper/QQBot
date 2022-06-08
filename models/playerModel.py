@@ -1,3 +1,6 @@
+from utils.dbHelper import get_data_as_model_object, set_data_as_json
+
+
 class PlayerModel:
     def __init__(self, id: int):
         self.id = id # QQ号
@@ -9,8 +12,25 @@ class PlayerModel:
         self._crit = 0  # 暴击
         self._res = 0  # 韧性
         self._critDmg = 150  # 暴击伤害百分比
-        self.energy = 0  # 功力
-        self.level = 1  # 境界
+        self._energy = 0  # 功力
+        self._level = 1  # 境界
+
+    # 获取玩家数据
+    @staticmethod
+    async def get_player(id):
+        key = f"player_{id}"
+        player = await get_data_as_model_object(key)
+        # 没有就注册并保存
+        if not player:
+            player = PlayerModel(id)
+            # 保存
+            await player.save()
+        return player
+
+    # 保存玩家数据
+    async def save(self):
+        key = f"player_{self.id}"
+        await set_data_as_json(key, self)
 
     def get_level_name(self) -> str:
         """
@@ -19,6 +39,20 @@ class PlayerModel:
         """
         ls = "筑基、开光、融合、心动、金丹、元婴、出窍、分神、合体、洞虚、大乘、渡劫".split('、')
         return ls[self.level]
+
+    @property
+    def energy(self):
+        if not self._energy:
+            self._energy = PlayerModel(self.id)._energy
+            self.save()
+        return self._energy
+
+    @property
+    def level(self):
+        if not self._level:
+            self._level = PlayerModel(self.id)._level
+            self.save()
+        return self._level
 
     @property
     def hp(self):

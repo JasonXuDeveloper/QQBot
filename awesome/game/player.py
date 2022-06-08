@@ -13,11 +13,6 @@ def permission(sender: SenderRoles) -> bool:
     return sender.from_group(921271552)
 
 
-# 获取玩家key
-def get_key(id : int) -> str:
-    return f"player_{id}"
-
-
 # on_command 装饰器将函数声明为一个命令处理器
 # 命令名字，别名，是否需要艾特了才能触发，然后必须来自群（JEngine群921271552）才能处理
 @on_command('info', aliases=('自视', '属性'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=2))
@@ -28,13 +23,7 @@ async def info(session: CommandSession):
     # 获取用户信息
     id = get_id(session)
     name = get_nickname(session)
-    key = get_key(id)
-    player = await get_data_as_model_object(key)
-    # 没有就注册并保存
-    if not player:
-        player = PlayerModel(id)
-        # 保存
-        await set_data_as_json(key, player)
+    player = await PlayerModel.get_player(id)
     # 向用户发送东西
     ret = f"""
     用户：{name}
