@@ -9,7 +9,7 @@ from utils.tools import *
 
 # on_command 装饰器将函数声明为一个命令处理器
 # 命令名字，别名，是否需要艾特了才能触发，然后鉴权
-@on_command('info', aliases=('自视', '属性'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
+@on_command('info', aliases=('bt自视', 'bt属性'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
 async def info(session: CommandSession):
     # 取得消息的内容，并且去掉首尾的空白符
     # ctx = session.current_arg_text.strip()
@@ -37,7 +37,7 @@ async def info(session: CommandSession):
         await session.send(ret)
 
 
-@on_command('add', aliases='加点', only_to_me=False, permission=permission, run_timeout=timedelta(seconds=30))
+@on_command('add', aliases='bt加点', only_to_me=False, permission=permission, run_timeout=timedelta(seconds=30))
 async def add_point(session: CommandSession):
     # 获取用户信息
     id = get_id(session)

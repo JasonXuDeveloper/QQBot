@@ -9,7 +9,7 @@ import operator
 
 
 # 打坐
-@on_command('med', aliases=('打坐', '修炼'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
+@on_command('med', aliases=('bt打坐', 'bt修炼'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
 async def info(session: CommandSession):
     # 取得消息的内容，并且去掉首尾的空白符
     # ctx = session.current_arg_text.strip()
@@ -63,7 +63,7 @@ async def info(session: CommandSession):
 
 
 # 功力榜
-@on_command('energy_rank', aliases='功力榜', only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
+@on_command('energy_rank', aliases='bt功力榜', only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
 async def energy_rank(session: CommandSession):
     # 玩家自己的id
     id = get_id(session)
