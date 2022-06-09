@@ -2,8 +2,6 @@ from utils.dbHelper import get_data_as_model_object, set_data_as_json
 from varname import nameof
 import asyncio
 
-from utils.tools import force_sync
-
 
 class PlayerModel:
     def __init__(self, id: int):
