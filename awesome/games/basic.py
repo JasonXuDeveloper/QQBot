@@ -18,6 +18,7 @@ async def info(session: CommandSession):
     name = get_nickname(session)
     player = await PlayerModel.get_player(id)
     print(player.last_med)
+    print(player.can_med)
     # 判断是否在修仙
     if not player.can_med:
         # 如果正在修仙，判断满300秒了嘛，没的话不让结束
