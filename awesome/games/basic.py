@@ -68,7 +68,10 @@ async def energy_rank(session: CommandSession):
     # 玩家自己的id
     id = get_id(session)
     name = get_nickname(session)
-    group_id = get_group_id(session)
+    group_id = session.event.group_id
+    print(group_id)
+    group_id = session.event.discuss_id
+    print(group_id)
     # 玩家排名
     r = 0
     # 获取全部key
@@ -81,7 +84,6 @@ async def energy_rank(session: CommandSession):
         player = await PlayerModel.get_player(str(k).split('_')[1])
         # 名字
         try:
-            print(group_id)
             player.name = (await get_member(group_id, player.id)).nickname
         except:
             player.name = player.id
