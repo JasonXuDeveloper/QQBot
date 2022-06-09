@@ -35,7 +35,7 @@ async def info(session: CommandSession):
             await session.send(ret)
         # 不能结束
         else:
-            ret = f"道友「{name}」还在打坐中，请至少等待{diff}秒"
+            ret = f"道友「{name}」还在打坐中，请至少等待{300 - diff}秒"
             await session.send(ret)
     # 可以修仙就开始修仙
     else:

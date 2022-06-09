@@ -2,6 +2,8 @@ from utils.dbHelper import get_data_as_model_object, set_data_as_json
 from varname import nameof
 import asyncio
 
+from utils.tools import force_sync
+
 
 class PlayerModel:
     def __init__(self, id: int):
@@ -42,11 +44,9 @@ class PlayerModel:
         key = f"player_{self.id}"
         await set_data_as_json(key, self)
 
-
-    def save_sync(self):
-        loop = asyncio.get_event_loop()
-        coroutine = self.save()
-        loop.run_until_complete(coroutine)
+    @force_sync
+    async def save_sync(self):
+        await self.save()
 
 
     def get_level_name(self) -> str:
