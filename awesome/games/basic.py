@@ -86,11 +86,12 @@ async def energy_rank(session: CommandSession):
             player.name = player.id
         # 记录
         ps.append(player)
-        # 玩家排名
-        if player.id == id:
-            r = ps.index(player) + 1
     ps = sorted(ps, key=operator.attrgetter('energy'))[::-1]  # 降序
+    for p in ps:
+        # 玩家排名
+        if p.id == id:
+            r = ps.index(p) + 1
     ret = "【功力榜】\n"
-    ret += '\n'.join([f"「{ps.index(p)+1}」{p.name}：功力「{p.energy}」" for p in ps[:10]])
-    ret += f"\n「{name}」排名：第{r}名"
+    ret += '\n'.join([f"{ps.index(p)+1}. {p.name}：功力「{p.energy}」" for p in ps[:10]])
+    ret += f"\n----------\n「{name}」排名：第{r}名"
     await session.send(ret)
