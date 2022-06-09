@@ -19,7 +19,7 @@ async def info(session: CommandSession):
     name = get_nickname(session)
     player = await PlayerModel.get_player(id)
     # 向用户发送东西
-    ret = f"用户：{name}\n" \
+    ret = f"道友：{name}\n" \
           f"功力：{player.energy}\n" \
           f"境界：{player.get_level_name()}"
     await session.send(ret)

@@ -31,16 +31,16 @@ async def info(session: CommandSession):
             await player.save()
             # 配套的话
             txt = ["小有所成","初窥门径","炉火纯青","受高人指点","感悟天地造化"]
-            ret = f"道友：{name}已结束打坐，{txt[reward - 1]}，获得{reward}功力"
+            ret = f"道友「{name}」已结束打坐，{txt[reward - 1]}，获得{reward}功力"
             await session.send(ret)
         # 不能结束
         else:
-            ret = f"道友：{name}还在打坐中，请至少等待{diff}秒"
+            ret = f"道友「{name}」还在打坐中，请至少等待{diff}秒"
             await session.send(ret)
     # 可以修仙就开始修仙
     else:
         player.last_med = get_current_timestamp()  # 开始打坐
         await player.save()
         # 向用户发送东西
-        ret = f"道友：{name}开始打坐"
+        ret = f"道友「{name}」开始打坐"
         await session.send(ret)
