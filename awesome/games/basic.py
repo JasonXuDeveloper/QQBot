@@ -72,6 +72,7 @@ async def energy_rank(session: CommandSession):
     r = 0
     # 获取全部key
     keys = await get_keys(f"{get_player_key(None)}*")
+    print(keys)
     # 全部玩家
     ps = []
     # 获取玩家
