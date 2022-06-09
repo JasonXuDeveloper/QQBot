@@ -46,7 +46,7 @@ async def info(session: CommandSession):
             player.last_med = 0  # 取消打坐
             await player.save()
             # 配套的话
-            ret = f"道友「{name}」已结束打坐，{txt}，获得{reward}功力"
+            ret = f"道友「{name}」已打坐{diff}秒，{txt}，获得{reward}功力（{player.energy}）"
             await session.send(ret)
         # 不能结束
         else:
