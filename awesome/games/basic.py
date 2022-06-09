@@ -81,6 +81,7 @@ async def energy_rank(session: CommandSession):
         player = await PlayerModel.get_player(str(k).split('_')[1])
         # 名字
         try:
+            print(group_id)
             player.name = (await get_member(group_id, player.id)).nickname
         except:
             player.name = player.id
@@ -92,6 +93,7 @@ async def energy_rank(session: CommandSession):
         if p.id == id:
             r = ps.index(p) + 1
     ret = "【功力榜】\n"
-    ret += '\n'.join([f"{ps.index(p)+1}. {p.name}：功力「{p.energy}」" for p in ps[:10]])
-    ret += f"\n----------\n「{name}」排名：第{r}名"
+    ret += '\n'.join([f"{ps.index(p)+1}. {p.name}：功力「{p.energy}」" for p in ps[:11]])
+    ret += f"\n--------------------\n" \
+           f"「{name}」排名：第{r}名"
     await session.send(ret)
