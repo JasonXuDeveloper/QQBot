@@ -24,25 +24,29 @@ async def info(session: CommandSession):
         # 可以结束
         if diff >= 300:
             # 随机功力
+            txt = ""
             # 10分钟内
             if diff <= 60 * 10:
+                txt = "初窥门径"
                 reward = get_rand_int(1,3)
             # 30分钟内
             elif diff <= 60 * 30:
+                txt = "小有所成"
                 reward = get_rand_int(2,5)
             # 60分钟内
             elif diff <= 60 * 60:
+                txt = "受高人指点"
                 reward = get_rand_int(3,8)
             # 60分钟以上
             else:
+                txt = "感悟天地造化"
                 reward = get_rand_int(5,10)
             # 更新数据
             player.energy += reward
             player.last_med = 0  # 取消打坐
             await player.save()
             # 配套的话
-            txt = ["小有所成","初窥门径","炉火纯青","受高人指点","感悟天地造化"]
-            ret = f"道友「{name}」已结束打坐，{txt[reward - 1]}，获得{reward}功力"
+            ret = f"道友「{name}」已结束打坐，{txt}，获得{reward}功力"
             await session.send(ret)
         # 不能结束
         else:
