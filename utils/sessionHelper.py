@@ -35,4 +35,4 @@ def get_group_id(sender: CommandSession) -> int:
 
 
 async def get_members(group_id : int):
-    return await nonebot.get_bot().get_group_member_list()
+    return await nonebot.get_bot().get_group_member_list(group_id)
