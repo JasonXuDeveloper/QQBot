@@ -81,6 +81,7 @@ async def energy_rank(session: CommandSession):
         player = await PlayerModel.get_player(str(k).split('_')[1])
         # 名字
         try:
+            print(await get_member(group_id, player.id))
             player.name = (await get_member(group_id, player.id)).nickname
         except:
             player.name = player.id
