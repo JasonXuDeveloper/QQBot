@@ -44,9 +44,8 @@ class PlayerModel:
         key = f"player_{self.id}"
         await set_data_as_json(key, self)
 
-    @force_sync
     async def save_sync(self):
-        await self.save()
+        asyncio.create_task(self.save()) 
 
 
     def get_level_name(self) -> str:
