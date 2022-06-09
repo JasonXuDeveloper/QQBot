@@ -30,7 +30,7 @@ def force_sync(fn):
     def wrapper(*args, **kwargs):
         res = fn(*args, **kwargs)
         if asyncio.iscoroutine(res):
-            return asyncio.get_event_loop().run_until_complete(res)
+            asyncio.create_task(res()) 
         return res
 
     return wrapper
