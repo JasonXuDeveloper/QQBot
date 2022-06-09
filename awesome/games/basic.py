@@ -68,10 +68,7 @@ async def energy_rank(session: CommandSession):
     # 玩家自己的id
     id = get_id(session)
     name = get_nickname(session)
-    group_id = session.event.group_id
-    print(group_id)
-    group_id = session.event.discuss_id
-    print(group_id)
+    group_id = CUR_GROUP_ID
     # 玩家排名
     r = 0
     # 获取全部key
