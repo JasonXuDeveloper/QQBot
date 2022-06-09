@@ -5,6 +5,7 @@ from utils.jsonHelper import encode
 from utils.sessionHelper import *
 from utils.dbHelper import *
 from utils.tools import *
+import operator
 
 
 # 打坐
@@ -64,8 +65,31 @@ async def info(session: CommandSession):
 # 功力榜
 @on_command('energy_rank', aliases=('功力榜'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
 async def info(session: CommandSession):
-    # 取得消息的内容，并且去掉首尾的空白符
-    # ctx = session.current_arg_text.strip()
-    # 向用户发送东西
-    ret = f"一会儿写..."
+    # 玩家自己的id
+    id = get_id(session)
+    name = get_nickname(session)
+    # 玩家排名
+    r = 0
+    # 获取全部key
+    keys = get_keys(f"{get_player_key(None)}*")
+    # 全部玩家
+    ps = []
+    members = get_members(get_group_id(session))
+    # 全部成员
+    names = []
+    for m in members:
+        names.append({m.user_id, m.nickname})
+    # 获取玩家
+    for k in keys:
+        # key是player_id，需要用id获取对象
+        player = await PlayerModel.get_player(k.split('_')[1])
+        # 记录
+        ps.append(player)
+        # 玩家排名
+        if player.id == id:
+            r = ps.index(player) +1
+    ps = sorted(ps, key=operator.attrgetter('energy'))
+    ret = "「功力榜」\n"
+    ret += '\n'.join([f"「{ps.index(p)+1}」{names[p.id]}：功力「{p.energy}」" for p in ps[:10]])
+    ret += f"「{name}」排名：第{r}名"
     await session.send(ret)

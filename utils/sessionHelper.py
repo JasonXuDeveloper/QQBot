@@ -4,6 +4,7 @@
 # 'sex': 'unknown', 'title': '', 'user_id': 2313551611}, 'message': [{'type': 'text', 'data': {'text': 'info'}}],
 # 'message_seq': 270364, 'to_me': False}>
 from nonebot import CommandSession
+import nonebot
 
 
 def get_nickname(sender: CommandSession) -> str:
@@ -22,3 +23,16 @@ def get_id(sender: CommandSession) -> int:
     :return:
     """
     return int(sender.event.user_id)
+
+
+def get_group_id(sender: CommandSession) -> int:
+    """
+    获取groupid
+    :param sender:
+    :return:
+    """
+    return int(sender.event.group_id)
+
+
+def get_members(group_id : int):
+    return nonebot.get_bot().get_group_member_list()

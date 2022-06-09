@@ -23,3 +23,6 @@ async def get_data_as_model_object(key: str) -> object:
     if d:
         return decode(d)
     return None
+
+def get_keys(pattern : str = "*"):
+    return redis.keys(pattern)

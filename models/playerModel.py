@@ -3,6 +3,12 @@ from varname import nameof
 import asyncio
 
 
+def get_player_key(id: int) -> str:
+    if id is None:
+        return "player_"
+    return f"player_{id}"
+
+
 class PlayerModel:
     def __init__(self, id: int):
         self.id = id # QQ号
@@ -28,7 +34,7 @@ class PlayerModel:
     # 获取玩家数据
     @staticmethod
     async def get_player(id):
-        key = f"player_{id}"
+        key = get_player_key(id)
         player = await get_data_as_model_object(key)
         # 没有就注册并保存
         if not player:
@@ -39,7 +45,7 @@ class PlayerModel:
 
     # 保存玩家数据
     async def save(self):
-        key = f"player_{self.id}"
+        key = get_player_key(self.id)
         await set_data_as_json(key, self)
 
     async def save_sync(self):
