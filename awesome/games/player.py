@@ -77,7 +77,8 @@ async def add_point(session: CommandSession):
                 player.res += val
             elif n == "暴击伤害":
                 player.critDmg += val
-
+        # 保存
+        await player.save()
         # 向用户发送东西
         ret = f"加点成功，\n" \
               f"道友：{name}\n" \
