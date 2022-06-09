@@ -57,7 +57,7 @@ async def add_point(session: CommandSession):
         name = c.split('=')[0]
         val = int(c.split('=')[1])
         total_points += val
-    if total_points - player.points() >= 0:  # 可用点数足够的情况下
+    if player.points() - total_points >= 0:  # 可用点数足够的情况下
         # 加点
         for c in ctx:
             name = c.split('=')[0]
