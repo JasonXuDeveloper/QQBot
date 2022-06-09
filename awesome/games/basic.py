@@ -63,18 +63,16 @@ async def info(session: CommandSession):
 
 
 # 功力榜
-@on_command('energy_rank', aliases=('功力榜'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
+@on_command('energy_rank', aliases='功力榜', only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
 async def energy_rank(session: CommandSession):
-    await session.send("暂未开启")
-    return
     # 玩家自己的id
     id = get_id(session)
     name = get_nickname(session)
+    group_id = get_group_id(session)
     # 玩家排名
     r = 0
     # 获取全部key
     keys = await get_keys(f"{get_player_key(None)}*")
-    print(keys)
     # 全部玩家
     ps = []
     # 获取玩家
@@ -83,16 +81,15 @@ async def energy_rank(session: CommandSession):
         player = await PlayerModel.get_player(str(k).split('_')[1])
         # 名字
         try:
-            player.name = await get_member(JENGINE_GROUP_ID, player.id)
+            player.name = (await get_member(group_id, player.id)).nickname
         except:
             player.name = player.id
         # 记录
         ps.append(player)
         # 玩家排名
         if player.id == id:
-            r = ps.index(player) +1
-    ps = sorted(ps, key=operator.attrgetter('energy'))
-    print(ps)
+            r = ps.index(player) + 1
+    ps = sorted(ps, key=operator.attrgetter('energy'))[::-1]  # 降序
     ret = "【功力榜】\n"
     ret += '\n'.join([f"「{ps.index(p)+1}」{p.name}：功力「{p.energy}」" for p in ps[:10]])
     ret += f"\n「{name}」排名：第{r}名"

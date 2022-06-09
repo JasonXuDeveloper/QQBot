@@ -24,5 +24,6 @@ async def get_data_as_model_object(key: str) -> object:
         return decode(d)
     return None
 
-async def get_keys(pattern : str = "*"):
-    return await redis.keys(pattern)
+
+async def get_keys(pattern: str = "*"):
+    return [k.decode('utf-8') for k in await redis.keys(pattern)]

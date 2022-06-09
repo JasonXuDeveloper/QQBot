@@ -20,4 +20,4 @@ def get_current_timestamp() -> int:
 # 鉴权
 def permission(sender: SenderRoles) -> bool:
     # 必须来自JE群
-    return sender.from_group(JENGINE_GROUP_ID)
+    return sender.from_group([JENGINE_GROUP_ID, 1076963479, 815388501])

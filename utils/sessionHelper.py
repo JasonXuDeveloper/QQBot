@@ -6,6 +6,7 @@
 from nonebot import CommandSession
 import nonebot
 
+
 def get_nickname(sender: CommandSession) -> str:
     """
     获取名字
@@ -33,7 +34,15 @@ def get_group_id(sender: CommandSession) -> int:
     return int(sender.event.group_id)
 
 
-async def get_member(group_id : int, user_id: int):
+async def get_member(group_id: int, user_id: int):
+    """
+    {'age': 0, 'area': '', 'card': '', 'card_changeable': False, 'group_id': 815388501, 'join_time': 1654755232,
+    'last_sent_time': 1654755387, 'level': '1', 'nickname': '傑', 'role': 'owner', 'sex': 'unknown',
+    'shut_up_timestamp': 0, 'title': '', 'title_expire_time': 0, 'unfriendly': False, 'user_id': 2313551611}
+    :param group_id:
+    :param user_id:
+    :return:
+    """
     bot = nonebot.get_bot()
-    ret = await bot.get_group_member_info(group_id=group_id,user_id=user_id)
+    ret = await bot.get_group_member_info(group_id=group_id, user_id=user_id)
     return ret

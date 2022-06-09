@@ -1,9 +1,8 @@
 from utils.dbHelper import get_data_as_model_object, set_data_as_json
-from varname import nameof
 import asyncio
 
 
-def get_player_key(id: int) -> str:
+def get_player_key(id) -> str:
     if id is None:
         return "player_"
     return f"player_{id}"
@@ -11,7 +10,7 @@ def get_player_key(id: int) -> str:
 
 class PlayerModel:
     def __init__(self, id: int):
-        self.id = id # QQ号
+        self._id = id  # QQ号
         self._atk = 1  # 攻击力
         self._hp = 1  # 血量
         self._def = 0  # 防御力
@@ -49,8 +48,7 @@ class PlayerModel:
         await set_data_as_json(key, self)
 
     async def save_sync(self):
-        asyncio.create_task(self.save()) 
-
+        asyncio.create_task(self.save())
 
     def get_level_name(self) -> str:
         """
@@ -61,7 +59,7 @@ class PlayerModel:
         return ls[self.level]
 
     # 获取属性
-    def get_member(self, member : str, def_val = None):
+    def get_member(self, member: str, def_val=None):
         if hasattr(self, member):
             return self.__dict__[member]
         else:
@@ -69,10 +67,18 @@ class PlayerModel:
             temp = PlayerModel(self.id)
             if hasattr(temp, member):
                 temp.save_sync()
-                self = temp
-                return temp.__dict__[member]
+                setattr(self, member, temp.__dict__[member])
+                return self.__dict__[member]
             else:  # 创建的也没就是真的没了
                 return def_val
+
+    @property
+    def id(self):
+        return self.get_member("_id", 0)
+
+    @id.setter
+    def id(self, value):
+        self._id = value
 
     @property
     def last_med(self):
@@ -81,7 +87,7 @@ class PlayerModel:
     @last_med.setter
     def last_med(self, value):
         self._last_med = value
-    
+
     @property
     def energy(self):
         return self.get_member("_energy", 0)
