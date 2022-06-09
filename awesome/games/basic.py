@@ -87,6 +87,7 @@ async def energy_rank(session: CommandSession):
         if player.id == id:
             r = ps.index(player) +1
     ps = sorted(ps, key=operator.attrgetter('energy'))
+    print(ps)
     ret = "「功力榜」\n"
     ret += '\n'.join([f"「{ps.index(p)+1}」{p.name}：功力「{p.energy}」" for p in ps[:10]])
     ret += f"「{name}」排名：第{r}名"
