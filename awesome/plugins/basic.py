@@ -16,5 +16,5 @@ async def usage(session: CommandSession):
 @on_command('bug', patterns=['.*报错', '.*错误', ".*bug"], only_to_me=False)
 async def err(session: CommandSession):
     # 发送功能列表
-    await session.send('可以看看文档有没有提到')
+    await session.send('可以看看文档有没有提到：https://docs.xgamedev.net/zh/documents/0.7/')
     return
