@@ -6,7 +6,6 @@
 from nonebot import CommandSession
 import nonebot
 
-
 def get_nickname(sender: CommandSession) -> str:
     """
     获取名字
@@ -35,4 +34,6 @@ def get_group_id(sender: CommandSession) -> int:
 
 
 async def get_member(group_id : int, user_id: int):
-    return (await nonebot.get_bot().get_group_member_info(group_id, user_id, False))
+    bot = nonebot.get_bot()
+    ret = await bot.get_group_member_info(group_id=group_id,user_id=user_id)
+    return ret

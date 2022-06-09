@@ -1,4 +1,3 @@
-import imp
 import nonebot
 import config
 from os import path
