@@ -28,10 +28,68 @@ async def info(session: CommandSession):
     if more == "更多":
         ret = f"道友：{name}\n" \
               f"血量：{player.hp}\n" \
-              f"攻击力：{player.atk}\n" \
-              f"防御力：{player.defence}\n" \
-              f"闪避率：{player.doge}\n" \
-              f"暴击率：{player.crit}\n" \
-              f"韧性值：{player.res}\n" \
+              f"攻击：{player.atk}\n" \
+              f"防御：{player.defence}\n" \
+              f"闪避：{player.doge}\n" \
+              f"暴击：{player.crit}\n" \
+              f"韧性：{player.res}\n" \
               f"暴击伤害：{player.critDmg}"
         await session.send(ret)
+
+
+@on_command('add', aliases='加点', only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
+async def add_point(session: CommandSession):
+    # 获取用户信息
+    id = get_id(session)
+    name = get_nickname(session)
+    player = await PlayerModel.get_player(id)
+
+    # 取得消息的内容，并且去掉首尾的空白符
+    attrs = '\n'.join(f"- {x}" for x in ["血量", "攻击", "防御", "命中", "闪避", "暴击", "韧性", "暴击伤害"])
+    ctx = (await session.aget(prompt=f'输入「属性=值」以加点（当前可用：{player.points()}），可以用空格分割以输入多个，例：「生命=3 攻击=1」，'
+                                     f'可以加点的属性列表：\n'
+                                     f"{attrs}")).strip()
+    # 分割需要加的属性
+    ctx = ctx.split(' ')
+    # 全部点
+    total_points = 0
+    for c in ctx:
+        name = c.split('=')[0]
+        val = int(c.split('=')[1])
+        total_points += val
+    if total_points - player.points() >= 0:  # 可用点数足够的情况下
+        # 加点
+        for c in ctx:
+            name = c.split('=')[0]
+            val = int(c.split('=')[1])
+            if name == "血量":
+                player.hp += val
+            elif name == "攻击":
+                player.atk += val
+            elif name == "防御":
+                player.defence += val
+            elif name == "命中":
+                player.hit += val
+            elif name == "闪避":
+                player.doge += val
+            elif name == "暴击":
+                player.crit += val
+            elif name == "韧性":
+                player.res += val
+            elif name == "暴击伤害":
+                player.critDmg += val
+
+        # 向用户发送东西
+        ret = f"加点成功，\n" \
+              f"道友：{name}\n" \
+              f"血量：{player.hp}\n" \
+              f"攻击：{player.atk}\n" \
+              f"防御：{player.defence}\n" \
+              f"命中：{player.hit}\n" \
+              f"闪避：{player.doge}\n" \
+              f"暴击：{player.crit}\n" \
+              f"韧性：{player.res}\n" \
+              f"暴击伤害：{player.critDmg}"
+        await session.send(ret)
+    else:
+        await session.send("点数不足")

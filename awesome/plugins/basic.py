@@ -8,5 +8,6 @@ async def usage(session: CommandSession):
     await session.send('功能列表：\n'
                        '-【属性】、【自视】，查看自身属性\n'
                        '-【打坐】、【修炼】，开始或结束打坐，并获得功力\n'
+                       '-【加点】，增加属性点\n'
                        '-【功力榜】，记载功力最高的10位道友')
     return

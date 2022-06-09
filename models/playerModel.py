@@ -30,6 +30,14 @@ class PlayerModel:
         """
         return self.last_med == 0
 
+    def points(self) -> int:
+        """
+        可以加点
+        :return:
+        """
+        return self.energy * 10 + 1 + 1 + 150 - self.atk - self.defence - self.hp -\
+               self.doge - self.hit - self.crit - self.res - self.critDmg
+
     # 获取玩家数据
     @staticmethod
     async def get_player(id):
@@ -106,28 +114,64 @@ class PlayerModel:
 
     @property
     def hp(self):
-        return self._hp
+        return self._hp + 1
+
+    @hp.setter
+    def hp(self, value):
+        self._hp = value - 1
 
     @property
     def atk(self):
         return self._atk
 
+    @atk.setter
+    def atk(self, value):
+        self._atk = value - 1
+
     @property
     def defence(self):
         return self._def
+
+    @defence.setter
+    def defence(self, value):
+        self._def = value
 
     @property
     def doge(self):
         return self._doge
 
+    @doge.setter
+    def doge(self, value):
+        self._doge = value
+
+    @property
+    def hit(self):
+        return self._hit
+
+    @hit.setter
+    def hit(self, value):
+        self._hit = value
+
     @property
     def crit(self):
         return self._crit
+
+    @crit.setter
+    def crit(self, value):
+        self._crit = value
 
     @property
     def res(self):
         return self._res
 
+    @res.setter
+    def res(self, value):
+        self._res = value
+
     @property
     def critDmg(self):
         return self._critDmg
+
+    @critDmg.setter
+    def critDmg(self, value):
+        self._critDmg = value - 150
