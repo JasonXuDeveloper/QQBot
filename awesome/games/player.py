@@ -50,6 +50,7 @@ async def add_point(session: CommandSession):
                                      f'可以加点的属性列表：\n'
                                      f"{attrs}")).strip()
     # 分割需要加的属性
+    ctx = ctx.replace('-','')  # 删除负数
     ctx = ctx.split(' ')
     # 全部点
     total_points = 0
