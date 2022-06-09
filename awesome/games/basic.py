@@ -80,7 +80,10 @@ async def energy_rank(session: CommandSession):
         # key是player_id，需要用id获取对象
         player = await PlayerModel.get_player(str(k).split('_')[1])
         # 名字
-        player.name = await get_member(JENGINE_GROUP_ID, player.id)
+        try:
+            player.name = await get_member(JENGINE_GROUP_ID, player.id)
+        except:
+            player.name = player.id
         # 记录
         ps.append(player)
         # 玩家排名
