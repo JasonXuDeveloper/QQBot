@@ -65,6 +65,8 @@ async def info(session: CommandSession):
 # 功力榜
 @on_command('energy_rank', aliases=('功力榜'), only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
 async def energy_rank(session: CommandSession):
+    await session.send("暂未开启")
+    return
     # 玩家自己的id
     id = get_id(session)
     name = get_nickname(session)
@@ -91,7 +93,7 @@ async def energy_rank(session: CommandSession):
             r = ps.index(player) +1
     ps = sorted(ps, key=operator.attrgetter('energy'))
     print(ps)
-    ret = "「功力榜」\n"
+    ret = "【功力榜】\n"
     ret += '\n'.join([f"「{ps.index(p)+1}」{p.name}：功力「{p.energy}」" for p in ps[:10]])
-    ret += f"「{name}」排名：第{r}名"
+    ret += f"\n「{name}」排名：第{r}名"
     await session.send(ret)
