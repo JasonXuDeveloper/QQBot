@@ -114,11 +114,11 @@ class PlayerModel:
 
     @property
     def hp(self):
-        return self._hp + 1
+        return self._hp
 
     @hp.setter
     def hp(self, value):
-        self._hp = value - 1
+        self._hp = value
 
     @property
     def atk(self):
@@ -126,7 +126,7 @@ class PlayerModel:
 
     @atk.setter
     def atk(self, value):
-        self._atk = value - 1
+        self._atk = value
 
     @property
     def defence(self):

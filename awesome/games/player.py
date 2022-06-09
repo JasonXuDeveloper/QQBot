@@ -27,7 +27,7 @@ async def info(session: CommandSession):
     more = (await session.aget(prompt='输入「更多」以查看其他数据，输入其他东西则会取消该会话')).strip()
     if more == "更多":
         ret = f"道友：{name}\n" \
-              f"血量：{player.hp}\n" \
+              f"生命：{player.hp}\n" \
               f"攻击：{player.atk}\n" \
               f"防御：{player.defence}\n" \
               f"闪避：{player.doge}\n" \
@@ -54,35 +54,34 @@ async def add_point(session: CommandSession):
     # 全部点
     total_points = 0
     for c in ctx:
-        name = c.split('=')[0]
         val = int(c.split('=')[1])
         total_points += val
     if player.points() - total_points >= 0:  # 可用点数足够的情况下
         # 加点
         for c in ctx:
-            name = c.split('=')[0]
+            n = c.split('=')[0]
             val = int(c.split('=')[1])
-            if name == "生命":
+            if n == "生命":
                 player.hp += val
-            elif name == "攻击":
+            elif n == "攻击":
                 player.atk += val
-            elif name == "防御":
+            elif n == "防御":
                 player.defence += val
-            elif name == "命中":
+            elif n == "命中":
                 player.hit += val
-            elif name == "闪避":
+            elif n == "闪避":
                 player.doge += val
-            elif name == "暴击":
+            elif n == "暴击":
                 player.crit += val
-            elif name == "韧性":
+            elif n == "韧性":
                 player.res += val
-            elif name == "暴击伤害":
+            elif n == "暴击伤害":
                 player.critDmg += val
 
         # 向用户发送东西
         ret = f"加点成功，\n" \
               f"道友：{name}\n" \
-              f"血量：{player.hp}\n" \
+              f"生命：{player.hp}\n" \
               f"攻击：{player.atk}\n" \
               f"防御：{player.defence}\n" \
               f"命中：{player.hit}\n" \
