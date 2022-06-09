@@ -24,7 +24,7 @@ async def info(session: CommandSession):
           f"境界：{player.get_level_name()}"
     await session.send(ret)
     # 等待输入内容
-    more = (await session.aget(prompt='输入「更多」以查看其他数据')).strip()
+    more = (await session.aget(prompt='输入「更多」以查看其他数据，输入其他东西则会取消该会话')).strip()
     if more == "更多":
         ret = f"道友：{name}\n" \
               f"血量：{player.hp}\n" \
@@ -37,7 +37,7 @@ async def info(session: CommandSession):
         await session.send(ret)
 
 
-@on_command('add', aliases='加点', only_to_me=False, permission=permission, run_timeout=timedelta(seconds=15))
+@on_command('add', aliases='加点', only_to_me=False, permission=permission, run_timeout=timedelta(seconds=30))
 async def add_point(session: CommandSession):
     # 获取用户信息
     id = get_id(session)
@@ -45,8 +45,8 @@ async def add_point(session: CommandSession):
     player = await PlayerModel.get_player(id)
 
     # 取得消息的内容，并且去掉首尾的空白符
-    attrs = '\n'.join(f"- {x}" for x in ["血量", "攻击", "防御", "命中", "闪避", "暴击", "韧性", "暴击伤害"])
-    ctx = (await session.aget(prompt=f'输入「属性=值」以加点（当前可用：{player.points()}），可以用空格分割以输入多个，例：「生命=3 攻击=1」，'
+    attrs = '\n'.join(f"- {x}" for x in ["生命", "攻击", "防御", "命中", "闪避", "暴击", "韧性", "暴击伤害"])
+    ctx = (await session.aget(prompt=f'输入「属性=值」以加点（当前可用：{player.points()}），可以用空格分割以输入多个，例：「生命=3 攻击=1」，输入其他东西则会取消该会话\n'
                                      f'可以加点的属性列表：\n'
                                      f"{attrs}")).strip()
     # 分割需要加的属性
@@ -62,7 +62,7 @@ async def add_point(session: CommandSession):
         for c in ctx:
             name = c.split('=')[0]
             val = int(c.split('=')[1])
-            if name == "血量":
+            if name == "生命":
                 player.hp += val
             elif name == "攻击":
                 player.atk += val
