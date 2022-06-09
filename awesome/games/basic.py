@@ -74,7 +74,7 @@ async def info(session: CommandSession):
     keys = get_keys(f"{get_player_key(None)}*")
     # 全部玩家
     ps = []
-    members = get_members(get_group_id(session))
+    members = await get_members(get_group_id(session))
     # 全部成员
     names = []
     for m in members:
