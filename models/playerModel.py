@@ -23,7 +23,7 @@ class PlayerModel:
         是否可打坐
         :return:
         """
-        return self.last_med == 0 or str(self.last_med) == "0"
+        return self.last_med == 0
 
     # 获取玩家数据
     @staticmethod
@@ -73,11 +73,11 @@ class PlayerModel:
 
     @property
     def last_med(self):
-        return int(self.get_member("_last_med", 0))
+        return self.get_member("_last_med", 0)
 
     @last_med.setter
     def last_med(self, value):
-        self._last_med = int(value)
+        self._last_med = value
     
     @property
     def energy(self):

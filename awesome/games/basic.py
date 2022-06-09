@@ -17,13 +17,10 @@ async def info(session: CommandSession):
     id = get_id(session)
     name = get_nickname(session)
     player = await PlayerModel.get_player(id)
-    print(player.last_med)
-    print(player.can_med)
     # 判断是否在修仙
-    if not player.can_med:
+    if not player.can_med():
         # 如果正在修仙，判断满300秒了嘛，没的话不让结束
         diff = get_current_timestamp() - player.last_med
-        print(diff)
         # 可以结束
         if diff >= 300:
             # 随机功力
