@@ -5,7 +5,7 @@ from nonebot import on_command, CommandSession, SenderRoles
 
 JENGINE_GROUP_ID = 921271552
 ET_GROUP_ID = 688386209
-CUR_GROUP_ID = JENGINE_GROUP_ID
+CUR_GROUP_ID = ET_GROUP_ID
 ALLOW_LIST = [ET_GROUP_ID, 1076963479, 815388501]
 
 
@@ -22,3 +22,9 @@ def get_current_timestamp() -> int:
 # 鉴权
 def permission(sender: SenderRoles) -> bool:
     return sender.from_group(ALLOW_LIST)
+
+
+# 鉴权
+def is_je_group(sender: SenderRoles) -> bool:
+    return sender.from_group(JENGINE_GROUP_ID)
+

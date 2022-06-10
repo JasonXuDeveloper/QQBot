@@ -1,8 +1,7 @@
-import nonebot
-from nonebot import on_command, CommandSession
+from utils.tools import *
 
 
-@on_command('usage', aliases=['bt帮助', 'bt使用方法', 'bt功能', 'bt功能列表'], only_to_me=False)
+@on_command('usage', aliases=['bt帮助', 'bt使用方法', 'bt功能', 'bt功能列表'], permission=permission, only_to_me=False)
 async def usage(session: CommandSession):
     # 发送功能列表
     await session.send('功能列表：\n'
@@ -13,7 +12,7 @@ async def usage(session: CommandSession):
     return
 
 
-@on_command('bug', patterns=['.*报错', '.*错误', ".*bug"], only_to_me=False)
+@on_command('bug', patterns=['.*报错', '.*错误', ".*bug"], permission=is_je_group, only_to_me=False)
 async def err(session: CommandSession):
     # 发送功能列表
     await session.send('可以看看文档有没有提到：https://docs.xgamedev.net/zh/documents/0.7/')
